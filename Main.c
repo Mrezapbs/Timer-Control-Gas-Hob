@@ -1,6 +1,6 @@
 /* 
   Date: February 1st, 2025
-	Designer:	MrezaPBS(Written From Scratch) 
+  Designer:	MrezaPBS(Written From Scratch) 
   Special thanks to AMD_71
 */
 #include "BS66F340C.h"
@@ -15,10 +15,10 @@ Handler and Display will be set. */
 /*************************Preprocessors************************/
 /**************************************************************/
 #define SET		1
-#define RESET	0
+#define RESET		0
 
 #define	CATHODE_1	 _pb7
-#define	CATHODE_2  _pb2
+#define	CATHODE_2  	 _pb2
 #define	CATHODE_3	 _pb3
 #define	CATHODE_4	 _pb1
 #define	ANODE_1		 _pb0
@@ -35,56 +35,56 @@ Handler and Display will be set. */
 
 #define RELAY_PIN	 _pe4
 
-#define FLAG_GLOBAL_BLINK 		  	FlagByte0.Bit0
-#define FLAG_BLINK 					      FlagByte0.Bit1
-#define FLAG_COLON 					      FlagByte0.Bit2
-#define FLAG_COLON_BLINK			    FlagByte0.Bit3
-#define FLAG_LOCK_ICON 				    FlagByte0.Bit4
+#define FLAG_GLOBAL_BLINK 		FlagByte0.Bit0
+#define FLAG_BLINK 			FlagByte0.Bit1
+#define FLAG_COLON 			FlagByte0.Bit2
+#define FLAG_COLON_BLINK		FlagByte0.Bit3
+#define FLAG_LOCK_ICON 			FlagByte0.Bit4
 #define FLAG_LOCK_ICON_BLINK	  	FlagByte0.Bit5
-#define FLAG_COOKTIME_ICON 		  	FlagByte0.Bit6
+#define FLAG_COOKTIME_ICON 		FlagByte0.Bit6
 #define FLAG_COOKTIME_ICON_BLINK	FlagByte0.Bit7
 
-#define FLAG_AM_ICON				      FlagByte1.Bit0
-#define FLAG_AM_ICON_BLINK			  FlagByte1.Bit1
-#define FLAG_CLOCK_ICON				    FlagByte1.Bit2
-#define FLAG_CLOCK_ICON_BLINK		  FlagByte1.Bit3
-#define FLAG_COOKENDTIME_ICON		  FlagByte1.Bit4
-#define FLAG_COOKENDTIME_ICON_BLINK FlagByte1.Bit5
-#define FLAG_PM_ICON				      FlagByte1.Bit6
-#define FLAG_PM_ICON_BLINK			  FlagByte1.Bit7
+#define FLAG_AM_ICON			FlagByte1.Bit0
+#define FLAG_AM_ICON_BLINK		FlagByte1.Bit1
+#define FLAG_CLOCK_ICON			FlagByte1.Bit2
+#define FLAG_CLOCK_ICON_BLINK		FlagByte1.Bit3
+#define FLAG_COOKENDTIME_ICON		FlagByte1.Bit4
+#define FLAG_COOKENDTIME_ICON_BLINK 	FlagByte1.Bit5
+#define FLAG_PM_ICON			FlagByte1.Bit6
+#define FLAG_PM_ICON_BLINK		FlagByte1.Bit7
 
-#define FLAG_SPEAKER_ICON			    FlagByte2.Bit0
+#define FLAG_SPEAKER_ICON		FlagByte2.Bit0
 #define FLAG_SPEAKER_ICON_BLINK		FlagByte2.Bit1
-#define FLAG_ALARM_ICON				    FlagByte2.Bit2
-#define FLAG_ALARM_ICON_BLINK		  FlagByte2.Bit3
-#define FLAG_LIGHT_ICON			    	FlagByte2.Bit4
-#define FLAG_LIGHT_ICON_BLINK		  FlagByte2.Bit5
-#define FLAG_DONT_CALIBRATE		  	FlagByte2.Bit6
-#define FLAG_SHORT_TOUCH			    FlagByte2.Bit7
+#define FLAG_ALARM_ICON			FlagByte2.Bit2
+#define FLAG_ALARM_ICON_BLINK		FlagByte2.Bit3
+#define FLAG_LIGHT_ICON			FlagByte2.Bit4
+#define FLAG_LIGHT_ICON_BLINK		FlagByte2.Bit5
+#define FLAG_DONT_CALIBRATE		FlagByte2.Bit6
+#define FLAG_SHORT_TOUCH		FlagByte2.Bit7
 
-#define FLAG_HOLD_TOUCH			  	  FlagByte3.Bit0
-#define	FLAG_TOUCH_DIAGNOSE			  FlagByte3.Bit1
-#define FLAG_BUZZER_EN				    FlagByte3.Bit2	
-#define FLAG_AMPM_CLOCK				    FlagByte3.Bit3
-#define FLAG_HALF_SECOND		  	  FlagByte3.Bit4
-#define FLAG_LOCK_STATE			      FlagByte3.Bit5
+#define FLAG_HOLD_TOUCH			FlagByte3.Bit0
+#define	FLAG_TOUCH_DIAGNOSE		FlagByte3.Bit1
+#define FLAG_BUZZER_EN			FlagByte3.Bit2	
+#define FLAG_AMPM_CLOCK			FlagByte3.Bit3
+#define FLAG_HALF_SECOND		FlagByte3.Bit4
+#define FLAG_LOCK_STATE			FlagByte3.Bit5
 #define FLAG_COOKTIME_COUNT_START 	FlagByte3.Bit6
 #define FLAG_ALARMTIME_COUNT_START 	FlagByte3.Bit7
 
 #define FLAG_COOKTIME_WORKING	   	FlagByte4.Bit0
 #define FLAG_ALARMTIME_WORKING 		FlagByte4.Bit1
-#define FLAG_ALARMTIME_ENDED		  FlagByte4.Bit2
-#define FLAG_COOKTIME_EDIT			  FlagByte4.Bit3
+#define FLAG_ALARMTIME_ENDED		FlagByte4.Bit2
+#define FLAG_COOKTIME_EDIT		FlagByte4.Bit3
 #define FLAG_COOKENDTIME_WORKING	FlagByte4.Bit4
-#define FLAG_NO_BEEP				      FlagByte4.Bit5
-#define FLAG_MANUALLY_ENDED			  FlagByte4.Bit6
-#define FLAG_E2P_WRITE				    FlagByte4.Bit7
+#define FLAG_NO_BEEP			FlagByte4.Bit5
+#define FLAG_MANUALLY_ENDED		FlagByte4.Bit6
+#define FLAG_E2P_WRITE			FlagByte4.Bit7
 
-#define FLAG_ALARMTIME_EDIT 		  FlagByte5.Bit0
+#define FLAG_ALARMTIME_EDIT 		FlagByte5.Bit0
 #define FLAG_DECIDE_WHICH_MENU		FlagByte5.Bit1
-#define FLAG_COOKENDTIME_EDIT		  FlagByte5.Bit2
-#define FLAG_SETTINGS_CHANGED		  FlagByte5.Bit3
-#define FLAG_CLOCK_CHANGED		  	FlagByte5.Bit4
+#define FLAG_COOKENDTIME_EDIT		FlagByte5.Bit2
+#define FLAG_SETTINGS_CHANGED		FlagByte5.Bit3
+#define FLAG_CLOCK_CHANGED		FlagByte5.Bit4
 
 #define UP_TCH01	30		//setting
 #define UP_TCH02	30		//play
@@ -109,23 +109,23 @@ Handler and Display will be set. */
 #define BUZZER_PLAY		_pas02=_pas12
 
 /************Menus**********/
-#define START_UP				      1
-#define NORMAL					      2
+#define START_UP			1
+#define NORMAL				2
 #define LOCK_SETTING		    	3
 #define CLOCK_SETTING		    	4
 #define BUZZER_SETTING		  	5
-#define LIGHT_SETTING			    6
-#define COOKTIME_SETTING		  7
-#define COOKENDTIME_SETTING 	8
-#define ALARMTIME_SETTING		  9
-#define COOK_TIME_DOWNCOUNTER  10
-#define ALARM_TIME_DOWNCOUNTER 11
-#define END_MENU			   12
+#define LIGHT_SETTING			6
+#define COOKTIME_SETTING		7
+#define COOKENDTIME_SETTING 		8
+#define ALARMTIME_SETTING		9
+#define COOK_TIME_DOWNCOUNTER  		10
+#define ALARM_TIME_DOWNCOUNTER 		11
+#define END_MENU			12
 
-#define TEST_MENU			   99
+#define TEST_MENU			99
 
-#define _7MINUTES			   420
-#define _8MINUTES			   480
+#define _7MINUTES			420
+#define _8MINUTES			480
 /**************************************************************/
 /*************************FLAGS********************************/
 /**************************************************************/
@@ -269,22 +269,22 @@ void Anode_Setter(unsigned char digit_number)
 	switch(digit_number)
 	{
 		case 0: ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_5=ANODE_6=1;  	 	break;
-		case 1: ANODE_2=ANODE_3=1;											                break;
-		case 2: ANODE_1=ANODE_2=ANODE_4=ANODE_5=ANODE_7=1;		 		    	break;
-		case 3: ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_7=1;				    	break;
-		case 4: ANODE_2=ANODE_3=ANODE_6=ANODE_7=1;						        	break;
-		case 5: ANODE_1=ANODE_3=ANODE_4=ANODE_6=ANODE_7=1;				  	  break;
-		case 6: ANODE_1=ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;		  break;			
-		case 7: ANODE_1=ANODE_2=ANODE_3=1;								  	          break;	
+		case 1: ANODE_2=ANODE_3=1;					        break;
+		case 2: ANODE_1=ANODE_2=ANODE_4=ANODE_5=ANODE_7=1;		 	break;
+		case 3: ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_7=1;			break;
+		case 4: ANODE_2=ANODE_3=ANODE_6=ANODE_7=1;				break;
+		case 5: ANODE_1=ANODE_3=ANODE_4=ANODE_6=ANODE_7=1;			break;
+		case 6: ANODE_1=ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;		break;			
+		case 7: ANODE_1=ANODE_2=ANODE_3=1;					break;	
 		case 8: ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;	break;	
-		case 9: ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_6=ANODE_7=1;			break;
-		case 10:ANODE_1=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;				      break;//E
-		case 11:ANODE_1=ANODE_5=ANODE_6=ANODE_7=1;						          break;//F
-		case 12:ANODE_3=ANODE_5=ANODE_7=1;  							            	break;//n
-		case 13:ANODE_2=ANODE_3=ANODE_4=ANODE_5=ANODE_7=1; 				      break;//d
-		case 14:ANODE_7=1; 				    							                  	break;//-
-		case 15:ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;					    break;//b
-		case 99:ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=0;  break;//show nothing
+		case 9: ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_6=ANODE_7=1;		break;
+		case 10:ANODE_1=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;			break;//E
+		case 11:ANODE_1=ANODE_5=ANODE_6=ANODE_7=1;				break;//F
+		case 12:ANODE_3=ANODE_5=ANODE_7=1;  					break;//n
+		case 13:ANODE_2=ANODE_3=ANODE_4=ANODE_5=ANODE_7=1; 			break;//d
+		case 14:ANODE_7=1; 				    			break;//-
+		case 15:ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=1;			break;//b
+		case 99:ANODE_1=ANODE_2=ANODE_3=ANODE_4=ANODE_5=ANODE_6=ANODE_7=0; 	break;//show nothing
 	}	
 }
 void Display_Scan(void)
@@ -297,11 +297,11 @@ void Display_Scan(void)
 		case 1:
 		CATHODE_2=1;CATHODE_3=1;CATHODE_4=1;CATHODE_1=0;
 		Anode_Setter(_1stDigit);
-		if(FLAG_COLON)			ANODE_8  = SET;
+		if(FLAG_COLON)				ANODE_8  = SET;
 		else					ANODE_8  = RESET;
-		if(FLAG_LOCK_ICON)		ANODE_9  = SET;
+		if(FLAG_LOCK_ICON)			ANODE_9  = SET;
 		else					ANODE_9  = RESET;
-		if(FLAG_COOKTIME_ICON)	ANODE_10 = SET;
+		if(FLAG_COOKTIME_ICON)			ANODE_10 = SET;
 		else					ANODE_10 = RESET;
 		break;
 		
@@ -309,11 +309,11 @@ void Display_Scan(void)
 		CATHODE_1=1;CATHODE_3=1;CATHODE_4=1;CATHODE_2=0;
 		Anode_Setter(_2ndDigit);
 		if(FLAG_AM_ICON)			ANODE_8  = SET;
-		else						ANODE_8  = RESET;
+		else					ANODE_8  = RESET;
 		if(FLAG_CLOCK_ICON)			ANODE_9  = SET;
-		else						ANODE_9  = RESET;
-		if(FLAG_COOKENDTIME_ICON)	ANODE_10 = SET;
-		else						ANODE_10 = RESET;
+		else					ANODE_9  = RESET;
+		if(FLAG_COOKENDTIME_ICON)		ANODE_10 = SET;
+		else					ANODE_10 = RESET;
 		break;
 		
 		case 5:
