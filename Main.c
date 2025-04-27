@@ -212,7 +212,7 @@ void Decide_Which_Menu(void)
 	if(FLAG_COOKENDTIME_WORKING)
 	{
 		if(FLAG_ALARMTIME_WORKING)	DisplayMenu = ALARM_TIME_DOWNCOUNTER;
-		else						DisplayMenu = NORMAL;
+		else				DisplayMenu = NORMAL;
 	}
 	////
 	else if(!FLAG_COOKTIME_WORKING && !FLAG_ALARMTIME_WORKING)
@@ -320,18 +320,18 @@ void Display_Scan(void)
 		CATHODE_1=1;CATHODE_2=1;CATHODE_4=1;CATHODE_3=0;
 		Anode_Setter(_3rdDigit);
 		if(FLAG_PM_ICON)			ANODE_8  = SET;
-		else						ANODE_8  = RESET;
-		if(FLAG_SPEAKER_ICON)		ANODE_9  = SET;
-		else						ANODE_9  = RESET;
+		else					ANODE_8  = RESET;
+		if(FLAG_SPEAKER_ICON)			ANODE_9  = SET;
+		else					ANODE_9  = RESET;
 		if(FLAG_ALARM_ICON)			ANODE_10 = SET;
-		else						ANODE_10 = RESET;
+		else					ANODE_10 = RESET;
 		break;
 		
 		case 7:
 		CATHODE_1=1;CATHODE_2=1;CATHODE_3=1;CATHODE_4=0;
 		Anode_Setter(_4thDigit);
 		if(FLAG_LIGHT_ICON)			ANODE_9  = SET;
-		else						ANODE_9  = RESET;
+		else					ANODE_9  = RESET;
 		break;
 		
 		case 2:case 4:case 6:case 8:
@@ -359,7 +359,7 @@ void __attribute((interrupt(0x18))) ISR_CTM1( void )//DEFINE_ISR (Interrupt_CTM1
 		if(FLAG_BUZZER_EN)
 		{
 			if(BuzzerTime > 0)  BuzzerTime--;
-			else 				{FLAG_BUZZER_EN = RESET;}
+			else 		     {FLAG_BUZZER_EN = RESET;}
 		}
 		if(_1MsecCounter>=10)
 		{
@@ -607,7 +607,7 @@ void Set_Buzzer_SoundType(void)
 }
 void Set_Backlight_Level(void)
 {
-	if(BacklightType == 3)		DimLevel = 8;
+	if(BacklightType == 3)	    DimLevel = 8;
 	else if(BacklightType == 2) DimLevel = 12;
 	else if(BacklightType == 1) DimLevel = 16;
 }
@@ -658,17 +658,17 @@ void Buzzer_Handler(void)
 	{
 		case 1:
 		if(BuzzerTime>0)      BUZZER_PLAY = SET;
-		else 				  BUZZER_PLAY = RESET;
+		else 		      BUZZER_PLAY = RESET;
 		break;
 
 		case 2:
 		if((BuzzerTime >500 && BuzzerTime<700) ||(BuzzerTime >800 && BuzzerTime<1000)) BUZZER_PLAY = SET;
-		else 			BUZZER_PLAY = RESET;
+		else 									       BUZZER_PLAY = RESET;
 		break;
 		
 		case 3:
-		if(BuzzerTime>0)   BUZZER_PLAY = SET;
-		else 			   BUZZER_PLAY = RESET;
+		if(BuzzerTime>0)      BUZZER_PLAY = SET;
+		else 		      BUZZER_PLAY = RESET;
 		break;
 	}
 }
@@ -683,7 +683,7 @@ void Cookend_Time_DownKey_Function(void)
 			{
 				CookEndTimeMinute = 59;
 				if(CookEndTimeHour>0) CookEndTimeHour--;
-				else				  CookEndTimeHour = 23;
+				else		      CookEndTimeHour = 23;
 			}
 		}
 		else if(CookEndTimeHour==(ClockHour+CookTimeHour))
@@ -717,7 +717,7 @@ void Cooktime_Upkey_Function(void)
 	FLAG_COOKTIME_COUNT_START = RESET;
 	Set_Cookend_Time();
 	///
-	if(!FLAG_COOKENDTIME_WORKING) CookTimeMinute++;
+	if(!FLAG_COOKENDTIME_WORKING) 	        CookTimeMinute++;
 	else if(CookEndTimeHourStart>ClockHour) CookTimeMinute++;
 	else if(CookEndTimeHourStart==ClockHour){if(CookEndTimeMinuteStart>ClockMinute+1) CookTimeMinute++;}
 	if(CookTimeMinute > 59)
@@ -788,8 +788,7 @@ void Setting_Key_Function(void)
 				{
 					case START_UP:
 					{
-						/*Sound(1)*/;
-						DisplayMenu = CLOCK_SETTING;//_1ST_CLOCK_SETTING;				
+						DisplayMenu = CLOCK_SETTING;			
 					}
 					break;
 					
@@ -845,14 +844,12 @@ void Setting_Key_Function(void)
 					{
 						LastDisplayState = DisplayMenu;
 						DisplayMenu = LOCK_SETTING;	
-						/*Sound(1)*/;
 					}
 					break;
 					
 					case END_MENU:
 					{
 						FLAG_NO_BEEP = SET;
-						/*Sound(1)*/;
 					}
 					break;				
 				}
@@ -860,8 +857,6 @@ void Setting_Key_Function(void)
 		}
 		else 
 		{
-//			Sound(1);
-//			SettingTimerSec = 5;
 			switch(DisplayMenu)
 			{
 				case START_UP:
@@ -882,9 +877,8 @@ void Setting_Key_Function(void)
 				case END_MENU:
 				FLAG_NO_BEEP = SET;
 				if(FLAG_ALARMTIME_WORKING)	DisplayMenu = ALARM_TIME_DOWNCOUNTER;
-				else 						DisplayMenu = NORMAL;
+				else 				DisplayMenu = NORMAL;
 				break;
-				
 			}	
 		}
 	}
@@ -908,14 +902,12 @@ void Play_Key_Function(void)
 					
 					case START_UP:
 					{
-						/*Sound(1);*/
 						DisplayMenu = CLOCK_SETTING;
 					}
 					break;
 					
 					case LOCK_SETTING:
 					{
-						/*Sound(1);*/
 						if(!FLAG_COOKTIME_WORKING && !FLAG_ALARMTIME_WORKING && !FLAG_COOKENDTIME_WORKING) DisplayMenu = NORMAL;
 						else
 						{	
@@ -923,7 +915,6 @@ void Play_Key_Function(void)
 								Decide_Which_Menu();
 							else 
 								DisplayMenu = LastDisplayState;
-						
 						}
 					}
 					break;
@@ -952,7 +943,7 @@ void Play_Key_Function(void)
 						{
 							if(FLAG_COOKTIME_EDIT)
 							{
-								if(!CookTimeHour && !CookTimeMinute /*&& !CookTimeSecond*/)
+								if(!CookTimeHour && !CookTimeMinute )
 									{DisplayMenu = END_MENU; FLAG_MANUALLY_ENDED = SET;FLAG_NO_BEEP = SET;   FLAG_COOKTIME_WORKING = RESET;FLAG_ALARMTIME_ENDED = SET;}
 								else
 									Decide_Which_Menu();							
@@ -962,7 +953,7 @@ void Play_Key_Function(void)
 								DisplayMenu = COOKENDTIME_SETTING;
 							}
 						}
-						else//!FLAG_COOKTIME_WORKING
+						else
 						{
 							if(!FLAG_COOKTIME_EDIT)
 							{
@@ -987,8 +978,7 @@ void Play_Key_Function(void)
 					
 					case COOKENDTIME_SETTING:
 					{
-						//FLAG_COOKENDTIME_WORKING or FLAG_COOKTIME_WORKING must be set when we jump here
-						if(FLAG_COOKENDTIME_WORKING)//!FLAG_COOKTIME_WORKING
+						if(FLAG_COOKENDTIME_WORKING)
 						{
 							if(FLAG_COOKENDTIME_EDIT)
 							{
@@ -996,7 +986,7 @@ void Play_Key_Function(void)
 								else						DisplayMenu = NORMAL;
 								FLAG_COOKTIME_COUNT_START = RESET;
 								FLAG_COOKTIME_WORKING = RESET;	
-								if(CookTimeSecond>10)//CookTimeSecond = 0;
+								if(CookTimeSecond>10)
 								{
 									CookTimeSecond=0;
 									if(CookTimeMinute<59)CookTimeMinute++;
@@ -1008,18 +998,9 @@ void Play_Key_Function(void)
 								DisplayMenu = ALARMTIME_SETTING;
 							}	
 						}
-						else//FLAG_COOKTIME_WORKING
+						else
 						{	
 							DisplayMenu = ALARMTIME_SETTING;						
-//							DisplayMenu = NORMAL;
-//							FLAG_COOKTIME_COUNT_START = RESET;
-//							FLAG_COOKTIME_WORKING = RESET;
-//							if(CookTimeSecond>10)//CookTimeSecond = 0;
-//							{
-//								CookTimeSecond=0;
-//								if(CookTimeMinute<59)CookTimeMinute++;
-//							}
-//							Set_Cookend_Time();
 						}
 						FLAG_COOKENDTIME_EDIT = RESET;					
 					}
@@ -1047,7 +1028,7 @@ void Play_Key_Function(void)
 					{
 						FLAG_NO_BEEP = SET;	
 						if(!FLAG_ALARMTIME_WORKING)	DisplayMenu = NORMAL;
-						else						DisplayMenu = ALARM_TIME_DOWNCOUNTER;
+						else				DisplayMenu = ALARM_TIME_DOWNCOUNTER;
 						FLAG_MANUALLY_ENDED   = RESET;
 					}
 					break;
@@ -1080,7 +1061,7 @@ void Down_Key_Funciton(void)
 					case START_UP:
 					{
 						Sound(1);
-						DisplayMenu = CLOCK_SETTING;//_1ST_CLOCK_SETTING;	
+						DisplayMenu = CLOCK_SETTING;	
 					}
 					break;
 					case CLOCK_SETTING:
@@ -1163,7 +1144,6 @@ void Down_Key_Funciton(void)
 								AlarmTimeMinute = 0;
 							}
 						}	
-						//AlarmTimeSecond  =0;
 					}
 					break;
 					
@@ -1220,7 +1200,6 @@ void Down_Key_Hold_Function(void)
 			if(TchHoldTime>50)
 			{
 				CookTime_Setting_Downkey_Function();
-				//CookTimeSecond = 0;
 				FLAG_SHORT_TOUCH =1;
 				TchHoldTime-=5;
 				FLAG_DONT_CALIBRATE = SET;
@@ -1247,7 +1226,6 @@ void Down_Key_Hold_Function(void)
 						AlarmTimeMinute = 0;
 					}
 				}	
-				//AlarmTimeSecond  =0;
 				FLAG_SHORT_TOUCH =1;
 				TchHoldTime-=5;
 				FLAG_DONT_CALIBRATE = SET;
@@ -1287,8 +1265,7 @@ void Up_Key_Funciton(void)
 					
 					case START_UP:
 					{
-						
-						DisplayMenu = CLOCK_SETTING;//_1ST_CLOCK_SETTING;	
+						DisplayMenu = CLOCK_SETTING;	
 					}
 					break;
 	
@@ -1391,7 +1368,6 @@ void Up_Key_Funciton(void)
 									AlarmTimeHour = 23;
 							}
 						}
-						//AlarmTimeSecond = 0;
 					}
 					break;
 					
@@ -1481,7 +1457,6 @@ void Up_Key_Hold_Function(void)
 							AlarmTimeHour = 23;
 					}
 				}	
-				//AlarmTimeSecond = 0;
 				FLAG_SHORT_TOUCH =1;
 				TchHoldTime-=5;
 				FLAG_DONT_CALIBRATE = SET;
@@ -1508,8 +1483,8 @@ void Key_Check(void)
 	{
 		if(KeyState1==0)
 		{
-			if(KeyState2==0x01)	Setting_Key_Function();//KeyState2
-			if(KeyState2==0x02)	Play_Key_Function();//KeyState2
+			if(KeyState2==0x01)	Setting_Key_Function();
+			if(KeyState2==0x02)	Play_Key_Function();
 		}
 		if(KeyState1==0x04)	Down_Key_Funciton();
 		if(KeyState1==0x08)	Up_Key_Funciton();		
@@ -1522,7 +1497,6 @@ void Key_Check(void)
 			{
 				if(TchHoldTime>150)
 				{
-					//FLAG_HOLD_TOUCH =1;
 					{_1stDigit--;if(_1stDigit<1) _1stDigit=9;}
 					FLAG_SHORT_TOUCH =1;
 					TchHoldTime-=20;
@@ -1546,7 +1520,6 @@ void Key_Check(void)
 						
 						FLAG_HOLD_TOUCH =1;
 						FLAG_SHORT_TOUCH =1;
-						//TchHoldTime-=20;
 						FLAG_DONT_CALIBRATE = SET;
 					}
 				}
@@ -1639,10 +1612,10 @@ void Touch_Check(void)
 				
 				if(TchReference01>UP_TCH01)
 				{
-					if(TchModule0>(TchReference01-DOWN_TCH01))		{if(TchCounter01>0)		TchCounter01--;}
-					else if(TchModule0<(TchReference01-UP_TCH01))	{if(TchCounter01<TCH_COUNTER_CONST)	TchCounter01++;}
+					if(TchModule0>(TchReference01-DOWN_TCH01))		{if(TchCounter01>0)			TchCounter01--;}
+					else if(TchModule0<(TchReference01-UP_TCH01))		{if(TchCounter01<TCH_COUNTER_CONST)	TchCounter01++;}
 					
-					if(TchCounter01==TCH_COUNTER_CONST)	KeyState1|=0x01;
+					if(TchCounter01==TCH_COUNTER_CONST)			KeyState1|=0x01;
 					if(TchCounter01==0)					KeyState1&=0xFE;
 				}
 			}
@@ -1662,10 +1635,10 @@ void Touch_Check(void)
 				
 				if(TchReference02>UP_TCH02)
 				{
-					if(TchModule0>(TchReference02-DOWN_TCH02))		{if(TchCounter02>0)		TchCounter02--;}
-					else if(TchModule0<(TchReference02-UP_TCH02))	{if(TchCounter02<TCH_COUNTER_CONST)	TchCounter02++;}
+					if(TchModule0>(TchReference02-DOWN_TCH02))		{if(TchCounter02>0)			TchCounter02--;}
+					else if(TchModule0<(TchReference02-UP_TCH02))		{if(TchCounter02<TCH_COUNTER_CONST)	TchCounter02++;}
 					
-					if(TchCounter02==TCH_COUNTER_CONST)	KeyState1|=0x02;
+					if(TchCounter02==TCH_COUNTER_CONST)			KeyState1|=0x02;
 					if(TchCounter02==0)					KeyState1&=0xFD;
 				}
 				
@@ -1675,10 +1648,10 @@ void Touch_Check(void)
 				
 				if(TchReference03>UP_TCH03)
 				{
-					if(TchModule2>(TchReference03-DOWN_TCH03))		{if(TchCounter03>0)		TchCounter03--;}
-					else if(TchModule2<(TchReference03-UP_TCH03))	{if(TchCounter03<TCH_COUNTER_CONST)	TchCounter03++;}
+					if(TchModule2>(TchReference03-DOWN_TCH03))		{if(TchCounter03>0)			TchCounter03--;}
+					else if(TchModule2<(TchReference03-UP_TCH03))		{if(TchCounter03<TCH_COUNTER_CONST)	TchCounter03++;}
 					
-					if(TchCounter03==TCH_COUNTER_CONST)	KeyState1|=0x04;
+					if(TchCounter03==TCH_COUNTER_CONST)			KeyState1|=0x04;
 					if(TchCounter03==0)					KeyState1&=0xFB;
 				}
 			}
@@ -1693,14 +1666,14 @@ void Touch_Check(void)
 			{
 				if((TchModule2<(TchReference04+10)) && (TchModule2>(TchReference04-10)))	TchCalibrTime04=0;		
 				else				{if(TchCalibrTime04>19)	{TchCalibrTime04=0;	TchReference04=TchModule2;}}
-				if(TchCalibrTime04>19)	{TchCalibrTime04=0;	TchReference04=TchModule2;}
+				if(TchCalibrTime04>19)		{TchCalibrTime04=0;	TchReference04=TchModule2;}
 				
 				if(TchReference04>UP_TCH04)
 				{
-					if(TchModule2>(TchReference04-DOWN_TCH04))		{if(TchCounter04>0)		TchCounter04--;}
+					if(TchModule2>(TchReference04-DOWN_TCH04))	{if(TchCounter04>0)			TchCounter04--;}
 					else if(TchModule2<(TchReference04-UP_TCH04))	{if(TchCounter04<TCH_COUNTER_CONST)	TchCounter04++;}
 					
-					if(TchCounter04==TCH_COUNTER_CONST)	KeyState1|=0x08;
+					if(TchCounter04==TCH_COUNTER_CONST)			KeyState1|=0x08;
 					if(TchCounter04==0)					KeyState1&=0xF7;
 				}
 			}
@@ -1743,7 +1716,6 @@ void Touch_Check(void)
 		if(TouchRefresh==0)			{_tkm0c2=0x02;}
 		else if(TouchRefresh==1)	{_tkm0c2=0x01; _tkm2c2=0x03;}
 		else 						{_tkm2c2=0x02;}
-	//	_tkm2c2=0x03;
 
 		_tkst=1;
 		_tkbusy=1;
@@ -1820,12 +1792,8 @@ void Display_Handler(void)
 				FLAG_COOKTIME_ICON		= RESET;
 				FLAG_COOKENDTIME_ICON	= RESET;
 			}
-//			if(FLAG_ALARMTIME_WORKING)		{FLAG_ALARM_ICON = SET;FLAG_ALARM_ICON_BLINK= RESET;}
-//			else							FLAG_ALARM_ICON = RESET;
 			FLAG_COLON_BLINK = SET;
-			Show_Clock();			
-			//FLAG_PM_ICON_BLINK = SET;?
-			
+			Show_Clock();					
 			if(FLAG_ALARMTIME_ENDED) 
 			{
 				FLAG_ALARM_ICON_BLINK = SET;
@@ -1843,18 +1811,17 @@ void Display_Handler(void)
 			FLAG_COOKTIME_ICON_BLINK = RESET;
 			FLAG_ALARM_ICON_BLINK	 = RESET;
 			FLAG_COOKENDTIME_ICON_BLINK = RESET;			
-			if(FLAG_COOKTIME_WORKING ||FLAG_COOKENDTIME_WORKING)FLAG_COOKTIME_ICON = SET;
-			else												FLAG_COOKTIME_ICON = RESET;	
+			if(FLAG_COOKTIME_WORKING ||FLAG_COOKENDTIME_WORKING)	FLAG_COOKTIME_ICON = SET;
+			else							FLAG_COOKTIME_ICON = RESET;	
 			if(FLAG_COOKENDTIME_WORKING)FLAG_COOKENDTIME_ICON = SET;
-			else						FLAG_COOKENDTIME_ICON = RESET;
-			if(FLAG_ALARMTIME_WORKING)	FLAG_ALARM_ICON	=SET;
-			else						FLAG_ALARM_ICON	= RESET;
+			else							FLAG_COOKENDTIME_ICON = RESET;
+			if(FLAG_ALARMTIME_WORKING)				FLAG_ALARM_ICON	=SET;
+			else							FLAG_ALARM_ICON	= RESET;
 			FLAG_CLOCK_ICON  = RESET;
 			FLAG_COLON = RESET;
 			FLAG_COLON_BLINK = RESET;
-			if(FLAG_LOCK_STATE){FLAG_LOCK_ICON_BLINK = RESET;FLAG_LOCK_ICON = SET;SettingTimerSec=5;}
-			else				FLAG_LOCK_ICON_BLINK = SET;
-			
+			if(FLAG_LOCK_STATE)					{FLAG_LOCK_ICON_BLINK = RESET;FLAG_LOCK_ICON = SET;SettingTimerSec=5;}
+			else							FLAG_LOCK_ICON_BLINK = SET;
 			if(FLAG_LOCK_STATE)	
 			{
 				_1stDigit = _DF_DISPLAY_NOTHING;
@@ -1869,8 +1836,8 @@ void Display_Handler(void)
 				_3rdDigit = _DF_DISPLAY_F;
 				_4thDigit = _DF_DISPLAY_F;				
 			}	
-			if(FLAG_COOKENDTIME_WORKING)	{FLAG_COOKTIME_ICON = SET;}
-			else if(!FLAG_COOKTIME_WORKING)	{FLAG_COOKTIME_ICON_BLINK = RESET;FLAG_COOKTIME_ICON = RESET;}
+			if(FLAG_COOKENDTIME_WORKING)		{FLAG_COOKTIME_ICON = SET;}
+			else if(!FLAG_COOKTIME_WORKING)		{FLAG_COOKTIME_ICON_BLINK = RESET;FLAG_COOKTIME_ICON = RESET;}
 			if(!FLAG_ALARMTIME_WORKING)		{FLAG_ALARM_ICON_BLINK = RESET;FLAG_ALARM_ICON = RESET;}
 			if(!SettingTimerSec)
 			{
@@ -1887,13 +1854,13 @@ void Display_Handler(void)
 		
 		case BUZZER_SETTING:
 		{
-			FLAG_CLOCK_ICON_BLINK = RESET;
-			FLAG_CLOCK_ICON		  = RESET;
-			FLAG_COLON			  = RESET;
-			FLAG_COLON_BLINK	  = RESET;
+			FLAG_CLOCK_ICON_BLINK   = RESET;
+			FLAG_CLOCK_ICON		= RESET;
+			FLAG_COLON		= RESET;
+			FLAG_COLON_BLINK	= RESET;
 			FLAG_SPEAKER_ICON_BLINK = SET;
-			FLAG_LOCK_ICON_BLINK  = RESET;
-			FLAG_LOCK_ICON		  = RESET;
+			FLAG_LOCK_ICON_BLINK    = RESET;
+			FLAG_LOCK_ICON		= RESET;
 			
 			_1stDigit = _DF_DISPLAY_b;
 			_2ndDigit = _DF_DISPLAY_DASH;
@@ -1917,8 +1884,8 @@ void Display_Handler(void)
 		case LIGHT_SETTING:
 		{
 			FLAG_SPEAKER_ICON_BLINK = RESET;
-			FLAG_SPEAKER_ICON = RESET;
-			FLAG_LIGHT_ICON_BLINK = SET;
+			FLAG_SPEAKER_ICON 	= RESET;
+			FLAG_LIGHT_ICON_BLINK   = SET;
 			_1stDigit = _DF_DISPLAY_d;
 			_2ndDigit = _DF_DISPLAY_DASH;
 			_3rdDigit = 0;
@@ -1938,19 +1905,19 @@ void Display_Handler(void)
 		
 		case COOKTIME_SETTING:
 		{
-			Initializer = SET;			
-			FLAG_LOCK_ICON_BLINK   = RESET;
-			FLAG_CLOCK_ICON_BLINK  = RESET;
-			FLAG_CLOCK_ICON		   = RESET;
-			FLAG_SPEAKER_ICON_BLINK= RESET;
-			FLAG_SPEAKER_ICON      = RESET;
-			FLAG_LIGHT_ICON_BLINK  = RESET;
-			FLAG_LIGHT_ICON		   = RESET;
+			Initializer 	         = SET;			
+			FLAG_LOCK_ICON_BLINK     = RESET;
+			FLAG_CLOCK_ICON_BLINK    = RESET;
+			FLAG_CLOCK_ICON	         = RESET;
+			FLAG_SPEAKER_ICON_BLINK  = RESET;
+			FLAG_SPEAKER_ICON        = RESET;
+			FLAG_LIGHT_ICON_BLINK    = RESET;
+			FLAG_LIGHT_ICON	         = RESET;
 			FLAG_COOKTIME_ICON_BLINK = SET;
-			FLAG_COLON_BLINK		 = RESET;
-			FLAG_COLON				= SET;
+			FLAG_COLON_BLINK	 = RESET;
+			FLAG_COLON		 = SET;
 			if(!FLAG_COOKENDTIME_WORKING)	FLAG_COOKENDTIME_ICON = RESET;
-			else							FLAG_COOKENDTIME_ICON = SET;
+			else				FLAG_COOKENDTIME_ICON = SET;
 			if(FLAG_COOKTIME_EDIT)
 			{
 				Division(CookTimeHour,10);
@@ -1983,9 +1950,9 @@ void Display_Handler(void)
 			}
 			if(!SettingTimerSec)
 			{
-				if(!CookTimeHour && !CookTimeMinute && FLAG_COOKTIME_EDIT/*&& CookTimeSecond*/)
+				if(!CookTimeHour && !CookTimeMinute && FLAG_COOKTIME_EDIT)
 				{
-					CookTimeSecond = 0;//???
+					CookTimeSecond = 0; 
 					FLAG_COOKTIME_WORKING = RESET;
 					FLAG_COOKTIME_COUNT_START = RESET;
 				}
@@ -2009,11 +1976,10 @@ void Display_Handler(void)
 			if(Initializer)
 			{
 				Initializer = RESET;
-				//Set_Cookend_Time();
 				if(!FLAG_COOKENDTIME_WORKING)
 				{
 					CookEndTimeHour = ClockHour + CookTimeHour;
-					CookEndTimeMinute = ClockMinute + CookTimeMinute/*+1*/;
+					CookEndTimeMinute = ClockMinute + CookTimeMinute;
 					if(CookEndTimeMinute >= 60)
 					{
 						CookEndTimeMinute = CookEndTimeMinute -60;
@@ -2026,18 +1992,18 @@ void Display_Handler(void)
 				}	
 			}
 			FLAG_COOKENDTIME_ICON_BLINK = SET;
-			FLAG_COLON_BLINK			= RESET;
-			FLAG_COLON					= SET;
+			FLAG_COLON_BLINK	    = RESET;
+			FLAG_COLON		    = SET;
 			FLAG_COOKTIME_ICON_BLINK    = RESET;
-			FLAG_COOKTIME_ICON			= SET;
+			FLAG_COOKTIME_ICON	    = SET;
 					
 			FLAG_SPEAKER_ICON_BLINK= RESET;
 			FLAG_SPEAKER_ICON      = RESET;
 			FLAG_LIGHT_ICON_BLINK  = RESET;
-			FLAG_LIGHT_ICON		   = RESET;
+			FLAG_LIGHT_ICON	       = RESET;
 			FLAG_LOCK_ICON_BLINK   = RESET;
-			if(FLAG_LOCK_STATE)		FLAG_LOCK_ICON=SET;
-			else					FLAG_LOCK_ICON=RESET;		
+			if(FLAG_LOCK_STATE)	FLAG_LOCK_ICON=SET;
+			else			FLAG_LOCK_ICON=RESET;		
 			Division(CookEndTimeHour,10);
 			_1stDigit = DivQuot;
 			_2ndDigit = DivRem;
@@ -2053,7 +2019,7 @@ void Display_Handler(void)
 				else
 				{
 					if(FLAG_ALARMTIME_WORKING)	DisplayMenu=ALARM_TIME_DOWNCOUNTER;
-					else						DisplayMenu = NORMAL;
+					else				DisplayMenu = NORMAL;
 					
 					FLAG_COOKTIME_COUNT_START = RESET;
 					FLAG_COOKTIME_WORKING = RESET;	
@@ -2070,22 +2036,22 @@ void Display_Handler(void)
 		{
 			FLAG_COOKTIME_ICON_BLINK = RESET;
 			if(FLAG_COOKTIME_WORKING || FLAG_COOKENDTIME_WORKING)	FLAG_COOKTIME_ICON = SET;
-			else 													FLAG_COOKTIME_ICON = RESET;
-			if(FLAG_COOKENDTIME_WORKING)FLAG_COOKENDTIME_ICON = SET;
-			else 						FLAG_COOKENDTIME_ICON = RESET;
+			else 							FLAG_COOKTIME_ICON = RESET;
+			if(FLAG_COOKENDTIME_WORKING)				FLAG_COOKENDTIME_ICON = SET;
+			else 							FLAG_COOKENDTIME_ICON = RESET;
 			
 			FLAG_SPEAKER_ICON_BLINK= RESET;
 			FLAG_SPEAKER_ICON      = RESET;
 			FLAG_LIGHT_ICON_BLINK  = RESET;
-			FLAG_LIGHT_ICON		   = RESET;
+			FLAG_LIGHT_ICON	       = RESET;
 			FLAG_LOCK_ICON_BLINK   = RESET;
-			if(FLAG_LOCK_STATE)		FLAG_LOCK_ICON=SET;
-			else					FLAG_LOCK_ICON=RESET;				
+			if(FLAG_LOCK_STATE)	FLAG_LOCK_ICON=SET;
+			else			FLAG_LOCK_ICON=RESET;				
 			
 			FLAG_COOKENDTIME_ICON_BLINK	= RESET;
-			FLAG_ALARM_ICON_BLINK	 = SET;
-			FLAG_COLON_BLINK 		 = RESET;
-			FLAG_COLON				 = SET;
+			FLAG_ALARM_ICON_BLINK	 	= SET;
+			FLAG_COLON_BLINK 		= RESET;
+			FLAG_COLON			= SET;
 			
 			
 			if(FLAG_ALARMTIME_EDIT)
@@ -2128,20 +2094,19 @@ void Display_Handler(void)
 		case COOK_TIME_DOWNCOUNTER:
 		{
 			FLAG_COOKTIME_ICON_BLINK = RESET;
-			FLAG_COOKTIME_ICON = SET;
-			FLAG_COLON_BLINK   = SET;
-			
-			FLAG_SPEAKER_ICON_BLINK= RESET;
-			FLAG_SPEAKER_ICON      = RESET;
-			FLAG_LIGHT_ICON_BLINK  = RESET;
-			FLAG_LIGHT_ICON		   = RESET;
-			FLAG_LOCK_ICON_BLINK   = RESET;
-			if(FLAG_LOCK_STATE)		FLAG_LOCK_ICON=SET;
-			else					FLAG_LOCK_ICON=RESET;	
+			FLAG_COOKTIME_ICON 	 = SET;
+			FLAG_COLON_BLINK   	 = SET;
+			FLAG_SPEAKER_ICON_BLINK  = RESET;
+			FLAG_SPEAKER_ICON        = RESET;
+			FLAG_LIGHT_ICON_BLINK    = RESET;
+			FLAG_LIGHT_ICON	         = RESET;
+			FLAG_LOCK_ICON_BLINK     = RESET;
+			if(FLAG_LOCK_STATE)	FLAG_LOCK_ICON=SET;
+			else			FLAG_LOCK_ICON=RESET;	
 			
 			FLAG_COOKENDTIME_ICON_BLINK = RESET;
 			if(FLAG_COOKENDTIME_WORKING)	FLAG_COOKENDTIME_ICON = SET;
-			else							FLAG_COOKENDTIME_ICON = RESET;
+			else				FLAG_COOKENDTIME_ICON = RESET;
 			
 			if(FLAG_ALARMTIME_ENDED) FLAG_ALARM_ICON_BLINK = SET;
 			else
@@ -2184,26 +2149,24 @@ void Display_Handler(void)
 			FLAG_SPEAKER_ICON_BLINK= RESET;
 			FLAG_SPEAKER_ICON      = RESET;
 			FLAG_LIGHT_ICON_BLINK  = RESET;
-			FLAG_LIGHT_ICON		   = RESET;
+			FLAG_LIGHT_ICON	       = RESET;
 			FLAG_LOCK_ICON_BLINK   = RESET;
-			if(FLAG_LOCK_STATE)		FLAG_LOCK_ICON=SET;
-			else					FLAG_LOCK_ICON=RESET;	
+			if(FLAG_LOCK_STATE)	FLAG_LOCK_ICON=SET;
+			else			FLAG_LOCK_ICON=RESET;	
 
-			FLAG_ALARM_ICON = SET;
-			FLAG_ALARM_ICON_BLINK = RESET;
-			FLAG_COLON_BLINK = SET;
-			FLAG_COOKTIME_ICON_BLINK = RESET;
-			////
+			FLAG_ALARM_ICON 	    = SET;
+			FLAG_ALARM_ICON_BLINK       = RESET;
+			FLAG_COLON_BLINK 	    = SET;
+			FLAG_COOKTIME_ICON_BLINK    = RESET;
 			FLAG_COOKENDTIME_ICON_BLINK = RESET;
 			if(FLAG_COOKENDTIME_WORKING)	FLAG_COOKENDTIME_ICON = SET;
-			else							FLAG_COOKENDTIME_ICON = RESET;
+			else				FLAG_COOKENDTIME_ICON = RESET;
 			if(FLAG_COOKTIME_WORKING || FLAG_COOKENDTIME_WORKING)	FLAG_COOKTIME_ICON	= SET;
-			else													FLAG_COOKTIME_ICON	= RESET;
+			else							FLAG_COOKTIME_ICON	= RESET;
 			if(FLAG_COOKTIME_WORKING)
 			{
 				Decide_Which_Menu();
 			}
-			///
 			if(!AlarmTimeHour)
 			{
 				Division(AlarmTimeMinute,10);
@@ -2219,7 +2182,7 @@ void Display_Handler(void)
 				_1stDigit = DivQuot;
 				_2ndDigit = DivRem;
 				Division(AlarmTimeMinute,10);
-				_3rdDigit =	DivQuot;
+				_3rdDigit = DivQuot;
 				_4thDigit = DivRem;
 			}
 		}
@@ -2228,69 +2191,60 @@ void Display_Handler(void)
 		case END_MENU:
 		{
 			if(FLAG_MANUALLY_ENDED) {FLAG_COOKTIME_ICON_BLINK = RESET; FLAG_COOKTIME_ICON = SET;}
-			else					{FLAG_COOKTIME_ICON_BLINK = SET;}
+			else			{FLAG_COOKTIME_ICON_BLINK = SET;}
 			if(!FLAG_NO_BEEP)
-				Sound(2);
-			
+				Sound(2);			
 			FLAG_COOKENDTIME_WORKING	= RESET;
 			FLAG_COOKENDTIME_ICON		= RESET;
-			FLAG_COOKENDTIME_ICON_BLINK = RESET;
+			FLAG_COOKENDTIME_ICON_BLINK 	= RESET;
 			FLAG_SPEAKER_ICON_BLINK		= RESET;
 			FLAG_LIGHT_ICON_BLINK		= RESET;
-			FLAG_SPEAKER_ICON			= RESET;
-			FLAG_LIGHT_ICON				= RESET;
+			FLAG_SPEAKER_ICON		= RESET;
+			FLAG_LIGHT_ICON			= RESET;
 			FLAG_LOCK_ICON_BLINK		= RESET;
-			if(FLAG_LOCK_STATE)			FLAG_LOCK_ICON = SET;
-			else						FLAG_LOCK_ICON = RESET;
-			FLAG_COLON_BLINK = RESET;
-			FLAG_COLON		 = RESET;
-			
-			//
+			if(FLAG_LOCK_STATE)		FLAG_LOCK_ICON = SET;
+			else				FLAG_LOCK_ICON = RESET;
+			FLAG_COLON_BLINK 		= RESET;
+			FLAG_COLON		 	= RESET;
 			if(FLAG_ALARMTIME_ENDED) 
 			{
 				if(!FLAG_MANUALLY_ENDED)
 					FLAG_ALARM_ICON_BLINK = SET;
 				else 
 				{
-					FLAG_ALARM_ICON = RESET;
-					FLAG_ALARMTIME_ENDED = RESET;
-					FLAG_ALARMTIME_WORKING = RESET;
-					AlarmTimeMinute = AlarmTimeHour=AlarmTimeSecond=0;	
+					FLAG_ALARM_ICON 	= RESET;
+					FLAG_ALARMTIME_ENDED 	= RESET;
+					FLAG_ALARMTIME_WORKING  = RESET;
+					AlarmTimeMinute = AlarmTimeHour = AlarmTimeSecond=0;	
 				}
 			}
 			else
 			{
 				FLAG_ALARM_ICON_BLINK = RESET;
-				if(!FLAG_ALARMTIME_WORKING)		FLAG_ALARM_ICON	 = RESET;
+				if(!FLAG_ALARMTIME_WORKING) FLAG_ALARM_ICON = RESET;
 			}
-			//
-			
 			_1stDigit = _DF_DISPLAY_NOTHING;
 			_2ndDigit = _DF_DISPLAY_E;
 			_3rdDigit = _DF_DISPLAY_n;
 			_4thDigit = _DF_DISPLAY_d;
 		}
 		break;
-		
-		case TEST_MENU:
-		{
 
-		}
+		default:
 		break;
 	}
-	
-	if((DisplayMenu!=NORMAL)&&(DisplayMenu!=CLOCK_SETTING))	{FLAG_AM_ICON=FLAG_PM_ICON=RESET;}
-
+	if((DisplayMenu!=NORMAL)&&(DisplayMenu!=CLOCK_SETTING))	
 	{
-		if(FLAG_COLON_BLINK)			{if(FLAG_HALF_SECOND) FLAG_COLON = SET; 	   		else	 FLAG_COLON = RESET;	       }
+		FLAG_AM_ICON=FLAG_PM_ICON=RESET;
+	}
+	{
+		if(FLAG_COLON_BLINK)			{if(FLAG_HALF_SECOND) FLAG_COLON = SET; 	   	else	 FLAG_COLON = RESET;	       }
 		if(FLAG_LOCK_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_LOCK_ICON = SET; 		else	 FLAG_LOCK_ICON = RESET;       } 
-		if(FLAG_COOKTIME_ICON_BLINK)	{if(FLAG_HALF_SECOND) FLAG_COOKTIME_ICON = SET;  	else	 FLAG_COOKTIME_ICON = RESET;   } 
-		/*if(FLAG_AM_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_AM_ICON = SET;  			else	 FLAG_AM_ICON = RESET;         }*/ 
+		if(FLAG_COOKTIME_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_COOKTIME_ICON = SET;  	else	 FLAG_COOKTIME_ICON = RESET;   } 
 		if(FLAG_CLOCK_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_CLOCK_ICON = SET;  		else	 FLAG_CLOCK_ICON = RESET;      }
-		if(FLAG_COOKENDTIME_ICON_BLINK) {if(FLAG_HALF_SECOND) FLAG_COOKENDTIME_ICON = SET;  else	 FLAG_COOKENDTIME_ICON = RESET;}
-		/*if(FLAG_PM_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_PM_ICON = SET;  			else	 FLAG_PM_ICON = RESET;         }*/
+		if(FLAG_COOKENDTIME_ICON_BLINK) 	{if(FLAG_HALF_SECOND) FLAG_COOKENDTIME_ICON = SET;  	else	 FLAG_COOKENDTIME_ICON = RESET;}
 		if(FLAG_SPEAKER_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_SPEAKER_ICON = SET;  	else	 FLAG_SPEAKER_ICON = RESET;    }
-		if(FLAG_LIGHT_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_LIGHT_ICON = SET;  		else	 FLAG_LIGHT_ICON = RESET;	   }
+		if(FLAG_LIGHT_ICON_BLINK)		{if(FLAG_HALF_SECOND) FLAG_LIGHT_ICON = SET;  		else	 FLAG_LIGHT_ICON = RESET;      }
 		
 		if(FLAG_ALARM_ICON_BLINK)
 		{
@@ -2328,46 +2282,44 @@ void E2p_Check(void)
 }
 void Variables_Init(void)
 {
-	FLAG_LOCK_STATE       = RESET;
+	FLAG_LOCK_STATE      	  	= RESET;
+	FLAG_COLON 	     	  	= RESET;
+	FLAG_LOCK_ICON 	     	  	= RESET;
+	FLAG_COOKTIME_ICON    	  	= RESET;
+	FLAG_AM_ICON 		  	= RESET; 
+	FLAG_CLOCK_ICON		  	= RESET;
+	FLAG_COOKENDTIME_ICON 	  	= RESET;
+	FLAG_PM_ICON		 	= RESET;
+	FLAG_SPEAKER_ICON	  	= RESET;
+	FLAG_ALARM_ICON		  	= RESET;
+	FLAG_LIGHT_ICON		  	= RESET;
 	
-	FLAG_COLON 			  = RESET;
-	FLAG_LOCK_ICON 	      = RESET;
-	FLAG_COOKTIME_ICON    = RESET;
-	FLAG_AM_ICON 		  = RESET; 
-	FLAG_CLOCK_ICON		  = RESET;
-	FLAG_COOKENDTIME_ICON = RESET;
-	FLAG_PM_ICON		  = RESET;
-	FLAG_SPEAKER_ICON	  = RESET;
-	FLAG_ALARM_ICON		  = RESET;
-	FLAG_LIGHT_ICON		  = RESET;
-	
-	FLAG_COLON_BLINK			= RESET;
+	FLAG_COLON_BLINK		= RESET;
 	FLAG_LOCK_ICON_BLINK		= RESET;
 	FLAG_COOKTIME_ICON_BLINK	= RESET;
-	FLAG_AM_ICON_BLINK			= RESET;
+	FLAG_AM_ICON_BLINK		= RESET;
 	FLAG_CLOCK_ICON_BLINK		= RESET;
 	FLAG_COOKENDTIME_ICON_BLINK	= RESET;
-	FLAG_PM_ICON_BLINK			= RESET;
+	FLAG_PM_ICON_BLINK		= RESET;
 	FLAG_SPEAKER_ICON_BLINK		= RESET;
 	FLAG_ALARM_ICON_BLINK		= RESET;
 	FLAG_LIGHT_ICON_BLINK		= RESET;
-	FLAG_AMPM_CLOCK				= RESET;	
+	FLAG_AMPM_CLOCK			= RESET;	
 	
-	FLAG_COOKTIME_COUNT_START   = RESET;
+	FLAG_COOKTIME_COUNT_START  	= RESET;
  	FLAG_ALARMTIME_COUNT_START	= RESET; 
 	FLAG_COOKTIME_WORKING	 	= RESET;
 	FLAG_ALARMTIME_WORKING 		= RESET;
 	FLAG_ALARMTIME_ENDED		= RESET;
-	FLAG_COOKTIME_EDIT			= RESET;//SET?
+	FLAG_COOKTIME_EDIT		= RESET;
 	
-	DisplayMenu = START_UP;
-
-	FLAG_COOKENDTIME_WORKING = RESET;
-	FLAG_NO_BEEP = RESET;
-	FLAG_MANUALLY_ENDED = RESET;
-	FLAG_DECIDE_WHICH_MENU = RESET;
-	FLAG_COOKENDTIME_EDIT  = RESET;
-	FLAG_SETTINGS_CHANGED  = RESET;
+	DisplayMenu 		 	= START_UP;
+	FLAG_COOKENDTIME_WORKING 	= RESET;
+	FLAG_NO_BEEP 			= RESET;
+	FLAG_MANUALLY_ENDED 	 	= RESET;
+	FLAG_DECIDE_WHICH_MENU 	 	= RESET;
+	FLAG_COOKENDTIME_EDIT    	= RESET;
+	FLAG_SETTINGS_CHANGED    	= RESET;
 	
 	if(E2p_Read(0)==0xAA)
 	{
@@ -2375,8 +2327,7 @@ void Variables_Init(void)
 		BuzzerSoundType = E2p_Read(2);
 		BacklightType   = E2p_Read(3);
 	}
-	else FLAG_E2P_WRITE = SET;/*First Startup of the System*/
-
+	else FLAG_E2P_WRITE = SET;
 	Set_Backlight_Level();
 	Set_Buzzer_SoundType();
 }
@@ -2414,19 +2365,19 @@ void System_Init(void)
 	
 	//Pin I/O Config
 	{	
-		_pa		= 0B00000000 ;
+		_pa	= 0B00000000 ;
 		_papu	= 0B00000000 ;
 		_pac	= 0B00011000 ; // AND6 , AND7 , BUZZER2 , XT2 , XT1 , AND3 , BUZZER1 , AND2
 		
-		_pb		= 0B10001110 ;
+		_pb	= 0B10001110 ;
 		_pbpu	= 0B00000000 ;
 		_pbc	= 0B01110000 ; // CTD1 , KY1 , KY2 , TEMP_SEN , CTD3 , CTD2 , CTD4 , AND1
 		
-		_pc		= 0B00000000 ;
+		_pc	= 0B00000000 ;
 		_pcpu	= 0B00000000 ;
 		_pcc	= 0B11110000 ; // - , - , - , - , AND5 , AND11/Pulse1 , AND9 , AND8
 		
-		_pe		= 0B00010000 ;
+		_pe	= 0B00010000 ;
 		_pepu	= 0B00000000 ;
 		_pec	= 0B11101100 ; // - , - , Zero_Cross , REL1OUT , KY4 , KY3 , AND4 , AND10/Pulse2
 	}
@@ -2438,23 +2389,27 @@ void System_Init(void)
 	
 	//Touch config
 	{
-		_tkm2roh=0x00;	_tkm2rol=0x14;
-		_tktmr=  0;
-		_tkc0=   0b10000010;
-		_tkc1=   0b00001101;
+		_tkm2roh = 0x00;
+		_tkm2rol = 0x14;
+		_tktmr   = 0;
+		_tkc0    = 0b10000010;
+		_tkc1	 = 0b00001101;
 		
-		_tkm2c0= 0x0C;	_tkm2c1= 0b00111111;	_tkm2c2= 0x00;
-		_tkst=0;	
+		_tkm2c0  = 0x0C;
+		_tkm2c1  = 0b00111111;	
+		_tkm2c2  = 0x00;
+		_tkst    =0;	
+
+		_tkm0roh = 0x00;	
+		_tkm0rol = 0x14;
+		_tktmr   = 0;
+		_tkc0	 = 0b10000010;
+		_tkc1	 = 0b00001101;
 		
-		////////////////
-		_tkm0roh=0x00;	_tkm0rol=0x14;
-		_tktmr=  0;
-		_tkc0=   0b10000010;
-		_tkc1=   0b00001101;
-		
-		_tkm0c0= 0x0C;	_tkm0c1= 0b00111111;	_tkm0c2= 0x00;
+		_tkm0c0  = 0x0C;
+		_tkm0c1  = 0b00111111;
+		_tkm0c2  = 0x00;
 		_tkst=0;
-		////////////////
 		
 		_pes0 &= 0b00111111;//key11
 		_pes0 &= 0b11001111;//key12
